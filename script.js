@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const allSlotsContainer = document.getElementById('all-slots');
     const topSlotsContainer = document.getElementById('top-slots');
     const totalPlayersElement = document.getElementById('total-players');
+    const shuffleBanner = document.getElementById('shuffle-banner');
     let slots = Array.from(allSlotsContainer.getElementsByClassName('slot')).filter(slot => !slot.classList.contains('coming-soon'));
 
     function assignRandomWinRates() {
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
             allSlotsContainer.appendChild(slot);
         });
 
-        // Ensure "Coming Soon" is last
+        //        // Ensure "Coming Soon" is last
         const comingSoonSlot = allSlotsContainer.querySelector('.coming-soon');
         if (comingSoonSlot) {
             allSlotsContainer.appendChild(comingSoonSlot);
@@ -107,6 +108,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
         updateSlots();
         updateTotalPlayers();
+        shuffleUsernames();
+    }
+
+    function generateUsernames() {
+        const usernames = [];
+        const slotNames = ['superace', 'superacedeluxe', 'superaceultimate', 'fortunegems', 'fortunegems2', 'sweetbonanza', 'sweetbonanza1000', 'gatesofolympus', 'moneycoming', 'sugarrush1000', 'goldenempire', 'chinesenewyear2'];
+        
+        for (let i = 0; i < 1000; i++) {
+            const randomSlot = slotNames[Math.floor(Math.random() * slotNames.length)];
+            const randomName = Math.random().toString(36).substring(2, 5).toUpperCase() + '***';
+            usernames.push({ name: randomName, slot: randomSlot });
+        }
+        return usernames;
+    }
+
+    const usernames = generateUsernames();
+
+    function shuffleUsernames() {
+        shuffleBanner.innerHTML = '';
+        const numberOfUsernames = Math.floor(Math.random() * 3) + 1; // Display 1 to 3 usernames
+        for (let i = 0; i < numberOfUsernames; i++) {
+            const randomUser = usernames[Math.floor(Math.random() * usernames.length)];
+            const slotImage = document.querySelector(`.slot[data-id="${randomUser.slot}"] .slot-image`).src;
+            const playerCount = updatePlayerCount(document.querySelector(`.slot[data-id="${randomUser.slot}"]`), parseInt(document.querySelector(`.slot[data-id="${randomUser.slot}"]`).getAttribute('data-percentage'), 10));
+            const userText = document.createElement('div');
+            userText.innerHTML = `<img src="${slotImage}" alt="${randomUser.slot}" class="username-slot-image"> ${randomUser.name} ${randomUser.slot.toUpperCase()} ${playerCount.toLocaleString()}`;
+            shuffleBanner.appendChild(userText);
+        }
     }
 
     assignRandomWinRates();

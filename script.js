@@ -1,224 +1,166 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    padding: 20px;
-    background-image: url('bg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #fff;
-    line-height: 1.6;
-}
+document.addEventListener("DOMContentLoaded", function() {
+    const allSlotsContainer = document.getElementById('all-slots');
+    const topSlotsContainer = document.getElementById('top-slots');
+    const totalPlayersElement = document.getElementById('total-players');
+    const shuffleBanner = document.getElementById('shuffle-banner');
+    let slots = Array.from(allSlotsContainer.getElementsByClassName('slot')).filter(slot => !slot.classList.contains('coming-soon'));
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.logo {
-    height: 60px;
-}
-
-.account-button a {
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.account-button a:hover {
-    background-color: #0056b3;
-}
-
-h1, h2 {
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.datetime {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 5px;
-    border-radius: 10px;
-}
-
-.total-players {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-    color: #080808;
-    text-shadow: 0 0 5px #00fc2a, 0 0 10px #00ff15, 0 0 15px #03df3a;
-}
-
-.neon-box {
-    border: 2px solid #ffcc00;
-    box-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
-}
-
-.shuffle-banner {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffcc00;
-    margin-bottom: 20px;
-    animation: fadeInOut 5s infinite;
-}
-
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-}
-
-.slots {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.slot {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 15px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 200px;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.slot:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.slot-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.chance-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.progress-bar {
-    position: relative;
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 20px;
-    margin-bottom: 5px;
-}
-
-.fill {
-    height: 100%;
-    width: 0;
-    transition: width 1s linear, background-color 0.5s;
-    border-radius: 10px;
-}
-
-.percentage {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #000;
-    line-height: 20px;
-    font-weight: bold;
-}
-
-.player-count {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #ffcc00;
-}
-
-.banner {
-    text-align: center;
-    margin: 20px 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.banner h3 {
-    margin-bottom: 10px;
-    font-size: 20px;
-    color: #ffcc00;
-}
-
-.banner p {
-    font-size: 16px;
-    color: #ffcc00;
-    margin-bottom: 20px;
-}
-
-.banner-image {
-    width: 100%;
-    height: auto;
-    max-width: 600px;
-    border-radius: 10px;
-}
-
-.note, .awareness-note {
-    text-align: center;
-    font-size: 16px;
-    margin-top: 20px;
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 5px;
-    border-radius: 10px;
-}
-
-.play-button {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.play-button a {
-    text-decoration: none;
-    color: white;
-    background-color: #ff0055;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    display: inline-block;
-}
-
-.play-button a .neon {
-    text-shadow: 0 0 5px #fff, 0 0 10px #ff0055, 0 0 15px #ff0055;
-}
-
-.play-button a:hover {
-    background-color: #ff3366;
-}
-
-@media (max-width: 768px) {
-    .slots {
-        flex-direction: column;
-        align-items: center;
+    function assignRandomWinRates() {
+        slots.forEach(slot => {
+            let winRate = Math.floor(Math.random() * 91) + 10; // Random win rate between 10 and 100
+            slot.setAttribute('data-percentage', winRate);
+            updateBar(slot);
+            updatePlayerCount(slot, winRate);
+        });
+        updateTotalPlayers();
     }
-}
+
+    function updateSlots() {
+        // Sort slots by percentage
+        slots.sort((a, b) => {
+            const percentageA = parseInt(a.getAttribute('data-percentage'), 10);
+            const percentageB = parseInt(b.getAttribute('data-percentage'), 10);
+            return percentageB - percentageA;
+        });
+
+        // Clear and update top slots container with top 3 slots
+        topSlotsContainer.innerHTML = '';
+        slots.slice(0, 3).forEach(slot => {
+            const clonedSlot = slot.cloneNode(true);
+            clonedSlot.querySelector('.progress-bar .fill').style.width = slot.querySelector('.progress-bar .fill').style.width;
+            topSlotsContainer.appendChild(clonedSlot);
+        });
+
+        // Ensure all slots are re-rendered
+        allSlotsContainer.innerHTML = '';
+        slots.forEach(slot => {
+            allSlotsContainer.appendChild(slot);
+        });
+
+        //        // Ensure "Coming Soon" is last
+        const comingSoonSlot = allSlotsContainer.querySelector('.coming-soon');
+        if (comingSoonSlot) {
+            allSlotsContainer.appendChild(comingSoonSlot);
+        }
+    }
+
+    function updateBar(slot) {
+        const bar = slot.querySelector('.progress-bar');
+        const currentPercentage = parseInt(slot.getAttribute('data-percentage'), 10);
+        const fill = bar.querySelector('.fill');
+        const percentageText = bar.querySelector('.percentage');
+        fill.style.width = currentPercentage + '%';
+        percentageText.textContent = currentPercentage + '%';
+
+        const chanceLabel = slot.querySelector('.chance-label');
+        const adviceText = slot.querySelector('.advice');
+        const color = getColorAndAdvice(currentPercentage, chanceLabel, adviceText);
+        fill.style.background = color;
+    }
+
+    function getColorAndAdvice(percentage, chanceLabel, adviceText) {
+        if (percentage >= 70) {
+            chanceLabel.textContent = "High Chances of Winning";
+            adviceText.textContent = "Recommended Bet: 10-15 pesos";
+            return 'linear-gradient(to right, #00ff00, #008000)';
+        } else if (percentage >= 40) {
+            chanceLabel.textContent = "Moderate Chances of Winning";
+            adviceText.textContent = "Recommended Bet: 4-9 pesos";
+            return 'linear-gradient(to right, #ffbf00, #ffa500)';
+        } else {
+            chanceLabel.textContent = "Low Chances of Winning";
+            adviceText.textContent = "Recommended Bet: 1-3 pesos";
+            return 'linear-gradient(to right, #ff0000, #8b0000)';
+        }
+    }
+
+    function updatePlayerCount(slot, winRate) {
+        const playerCountElement = slot.querySelector('.player-count');
+        const maxPlayers = 58000; // Max 58K players
+        const minPlayers = 10000; // Min 10K players
+        const playerCount = maxPlayers - Math.floor((winRate / 100) * (maxPlayers - minPlayers));
+        playerCountElement.textContent = `${playerCount.toLocaleString()} Players Playing`;
+        return playerCount;
+    }
+
+    function updateTotalPlayers() {
+        let totalPlayers = 0;
+        slots.forEach(slot => {
+            const winRate = parseInt(slot.getAttribute('data-percentage'), 10);
+            totalPlayers += updatePlayerCount(slot, winRate);
+        });
+        totalPlayersElement.textContent = `Total Online Players: ${totalPlayers.toLocaleString()}`;
+    }
+
+    function fluctuatePercentages() {
+        slots.forEach(slot => {
+            let currentPercentage = parseInt(slot.getAttribute('data-percentage'), 10);
+            const fluctuation = Math.floor(Math.random() * 11) - 5; // Random change between -5 and 5
+            let newPercentage = currentPercentage + fluctuation;
+
+            // Clamp the percentage between 0 and 100
+            if (newPercentage > 100) newPercentage = 100;
+            if (newPercentage < 0) newPercentage = 0;
+
+            slot.setAttribute('data-percentage', newPercentage);
+            updateBar(slot);
+        });
+
+        updateSlots();
+        updateTotalPlayers();
+        shuffleUsernames();
+    }
+
+    function generateUsernames() {
+        const usernames = [];
+        const slotNames = ['superace', 'superacedeluxe', 'superaceultimate', 'fortunegems', 'fortunegems2', 'sweetbonanza', 'sweetbonanza1000', 'gatesofolympus', 'moneycoming', 'sugarrush1000', 'goldenempire', 'chinesenewyear2'];
+        
+        for (let i = 0; i < 1000; i++) {
+            const randomSlot = slotNames[Math.floor(Math.random() * slotNames.length)];
+            const randomName = Math.random().toString(36).substring(2, 5).toUpperCase() + '***';
+            usernames.push({ name: randomName, slot: randomSlot });
+        }
+        return usernames;
+    }
+
+    const usernames = generateUsernames();
+
+    function shuffleUsernames() {
+        shuffleBanner.innerHTML = '';
+        const numberOfUsernames = Math.floor(Math.random() * 3) + 1; // Display 1 to 3 usernames
+        for (let i = 0; i < numberOfUsernames; i++) {
+            const randomUser = usernames[Math.floor(Math.random() * usernames.length)];
+            const slotImage = document.querySelector(`.slot[data-id="${randomUser.slot}"] .slot-image`).src;
+            const playerCount = updatePlayerCount(document.querySelector(`.slot[data-id="${randomUser.slot}"]`), parseInt(document.querySelector(`.slot[data-id="${randomUser.slot}"]`).getAttribute('data-percentage'), 10));
+            const userText = document.createElement('div');
+            userText.innerHTML = `<img src="${slotImage}" alt="${randomUser.slot}" class="username-slot-image"> ${randomUser.name} ${randomUser.slot.toUpperCase()} ${playerCount.toLocaleString()}`;
+            shuffleBanner.appendChild(userText);
+        }
+    }
+
+    assignRandomWinRates();
+    updateSlots();
+
+    // Simulate dynamic percentage changes
+    setInterval(fluctuatePercentages, Math.random() * 5000 + 5000); // Random interval between 5 and 10 seconds
+
+    // Display current date and time in the Philippines
+    function updateDateTime() {
+        const options = {
+            timeZone: 'Asia/Manila',
+            hour12: true,
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        const now = new Date().toLocaleDateString('en-US', options);
+        document.getElementById('datetime').textContent = now;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+});

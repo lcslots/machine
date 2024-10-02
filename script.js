@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const allSlotsContainer = document.getElementById('all-slots');
     const topSlotsContainer = document.getElementById('top-slots');
+    const totalPlayersElement = document.getElementById('total-players');
     let slots = Array.from(allSlotsContainer.getElementsByClassName('slot')).filter(slot => !slot.classList.contains('coming-soon'));
 
     function assignRandomWinRates() {
@@ -8,7 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
             let winRate = Math.floor(Math.random() * 91) + 10; // Random win rate between 10 and 100
             slot.setAttribute('data-percentage', winRate);
             updateBar(slot);
+            updatePlayerCount(slot, winRate);
         });
+        updateTotalPlayers();
     }
 
     function updateSlots() {
@@ -70,10 +73,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function updatePlayerCount(slot, winRate) {
+        const playerCountElement = slot.querySelector('.player-count');
+        const maxPlayers = 58000; // Max 58K players
+        const minPlayers = 10000; // Min 10K players
+        const playerCount = maxPlayers - Math.floor((winRate / 100) * (maxPlayers - minPlayers));
+        playerCountElement.textContent = `${playerCount.toLocaleString()} Players Playing`;
+        return playerCount;
+    }
+
+    function updateTotalPlayers() {
+        let totalPlayers = 0;
+        slots.forEach(slot => {
+            const winRate = parseInt(slot.getAttribute('data-percentage'), 10);
+            totalPlayers += updatePlayerCount(slot, winRate);
+        });
+        totalPlayersElement.textContent = `Total Online Players: ${totalPlayers.toLocaleString()}`;
+    }
+
     function fluctuatePercentages() {
         slots.forEach(slot => {
             let currentPercentage = parseInt(slot.getAttribute('data-percentage'), 10);
-            const fluctuation = Math.floor(Math.random() * 5) - 5; // Random change between -2 and 2
+            const fluctuation = Math.floor(Math.random() * 11) - 5; // Random change between -5 and 5
             let newPercentage = currentPercentage + fluctuation;
 
             // Clamp the percentage between 0 and 100
@@ -84,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function() {
             updateBar(slot);
         });
 
-        // Update the sorted slots and top slots after fluctuation
         updateSlots();
+        updateTotalPlayers();
     }
 
     assignRandomWinRates();

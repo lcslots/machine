@@ -62,6 +62,27 @@ h1, h2 {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 10px;
+    color: #080808;
+    text-shadow: 0 0 5px #00fc2a, 0 0 10px #00ff15, 0 0 15px #03df3a;
+}
+
+.neon-box {
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
+}
+
+.shuffle-banner {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 20px;
+    animation: fadeInOut 5s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
 }
 
 .slots {
@@ -123,7 +144,7 @@ h1, h2 {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    color: #000; /* Updated for better visibility */
+    color: #000;
     line-height: 20px;
     font-weight: bold;
 }
